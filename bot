@@ -1,0 +1,54 @@
+import discord
+from discord.ext import commands
+import requests
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='/',intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+
+def get_duck_image_url(nn):  
+    if nn == 1:  
+        url = 'https://random-d.uk/api/random'
+    elif nn == 2:
+        url = 'https://random.dog/woof.json' 
+    elif nn == 3:
+        url = 'https://randomfox.ca/floof/'
+    elif nn == 4:
+        url = 'https://pokeapi.co'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+
+@bot.command('duck')
+async def duck(ctx):
+    '''По команде duck вызывает функцию get_duck_image_url'''
+    image_url = get_duck_image_url(1)
+    await ctx.send(image_url)
+
+
+@bot.command('dog')
+async def dog(ctx):
+    '''По команде duck вызывает функцию get_duck_image_url'''
+    image_url = get_duck_image_url(2)
+    await ctx.send(image_url)
+
+@bot.command('fox')
+async def fox(ctx):
+    '''По команде duck вызывает функцию get_duck_image_url'''
+    image_url = get_duck_image_url(3)
+    await ctx.send(image_url)
+
+@bot.command('pokemon')
+async def pokemon(ctx):
+    '''По команде duck вызывает функцию get_duck_image_url'''
+    image_url = get_duck_image_url(4)
+    await ctx.send(image_url)
+
+bot.run('MTEyMTUwNjIwNzEzMjMwNzUxNw.GcsfX8.NTexqSUNb_xwtq5QsXS7R_vTCHZqBo23qv_pic')   
